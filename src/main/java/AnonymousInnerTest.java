@@ -6,10 +6,11 @@ class Outer2{
     Runnable getRunnable(int i){
         int num = 10;
 
-        class MyRunnable implements Runnable{
+        return new Runnable(){
 
             int localNum = 1000;
 
+            // anonymous inner class 1
             @Override
             public void run() {
                // i = 50;   오류가 남, getRunnable메서드가 호출 되는 시점이랑 MyRunnable클래스의 호출 시점이 달라서 오류가 난다.
@@ -24,9 +25,16 @@ class Outer2{
                 System.out.println("Outter.sNum = " + Outer2.sNum + "(외부 클래스 정적 변수)");
 
             }
-        }
-        return new MyRunnable();
+        };
     }
+
+    // anonymous inner class 2
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println("Runnable Class");
+        }
+    };
 }
 
 public class AnonymousInnerTest {
@@ -37,5 +45,7 @@ public class AnonymousInnerTest {
         Runnable runner = out.getRunnable(100);
 
         runner.run();
+
+        out.runnable.run();
     }
 }
